@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supabase Heartbeat</title>
+</head>
+<body>
+    <h1>Database Keep-Alive Endpoint</h1>
+    <p>This endpoint keeps the Supabase database active.</p>
+    <p id="status">Status: Initializing...</p>
+    
+    <script type="module">
+        // Import Supabase client configuration
+        import { supabase } from './src/lib/supabaseClient.js';
+        
+        async function sendHeartbeat() {
+            const statusEl = document.getElementById('status');
+            
+            try {
+                const { error } = await supabase
+                    .from('heartbeat')
+                    .insert([{ timestamp: new Date().toISOString() }]);
+                
+                if (error) {
+                    statusEl.textContent = 'Status: Error - ' + error.message;
+                    statusEl.style.color = 'red';
+                    return { success: false, error: error.message };
+                }
+                
+                statusEl.textContent = 'Status: Success - Heartbeat sent at ' + new Date().toLocaleString('de-DE');
+                statusEl.style.color = 'green';
+                return { success: true };
+            } catch (err) {
+                statusEl.textContent = 'Status: Error - ' + err.message;
+                statusEl.style.color = 'red';
+                return { success: false, error: err.message };
+            }
+        }
+        
+        // Send heartbeat immediately when page loads
+        sendHeartbeat();
+    </script>
+</body>
+</html>

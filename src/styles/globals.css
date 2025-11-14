@@ -1,0 +1,172 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 5%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 5%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 45 100% 51%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 60%;
+    --accent: 45 100% 51%;
+    --accent-foreground: 0 0% 0%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 45 100% 51%;
+    --radius: 0.5rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+    overflow-y: scroll;
+    width: 100%;
+  }
+
+  h1 {
+    @apply text-6xl md:text-7xl lg:text-8xl font-light tracking-tight;
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+
+  h2 {
+    @apply text-4xl md:text-5xl lg:text-6xl font-light tracking-tight;
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+
+  h3 {
+    @apply text-2xl md:text-3xl font-normal tracking-tight;
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+
+  p {
+    @apply text-base md:text-lg leading-relaxed;
+  }
+  
+  /* Reserve scrollbar gutter to avoid layout shifts when overlays open */
+  html {
+    scrollbar-gutter: stable both-edges;
+  }
+}
+
+/* Booking select custom option/background tweaks */
+@layer utilities {
+  /* Closed select control */
+  .booking-select select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255,215,0,0.18) !important;
+    padding-right: 2.5rem !important;
+  }
+
+  /* Focus styling */
+  .booking-select select:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(255,215,0,0.10) !important;
+    border-color: #FFD700 !important;
+  }
+
+  /* Native dropdown popup where allowed */
+  .booking-select select option {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+  }
+
+  /* Selected option styling (where supported) */
+  .booking-select select option:checked,
+  .booking-select select option[selected] {
+    background-color: #FFD700 !important;
+    color: #000000 !important;
+  }
+
+  .booking-select select option:hover {
+    background-color: rgba(255,215,0,0.14) !important;
+    color: #000000 !important;
+  }
+
+  /* Hide IE/Edge default arrow */
+  .booking-select select::-ms-expand {
+    display: none;
+  }
+}
+
+@layer utilities {
+  .text-gold {
+    color: #FFD700;
+  }
+  
+  .bg-gold {
+    background-color: #FFD700;
+  }
+  
+  .border-gold {
+    border-color: #FFD700;
+  }
+  
+  .from-gold {
+    --tw-gradient-from: #FFD700;
+  }
+  
+  .to-gold {
+    --tw-gradient-to: #D4AF37;
+  }
+  
+  .via-gold {
+    --tw-gradient-via: #FFD700;
+  }
+}
+
+/* Fade in up animation utility */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@layer utilities {
+  .animate-fadeInUp {
+    animation: fadeInUp 600ms cubic-bezier(.2,.8,.2,1) both;
+  }
+  .will-change-transform {
+    will-change: transform, opacity;
+  }
+}
+
+/* Force a visible, styled scrollbar for the bookings list to help debugging
+   (applies to the .bookings-scroll helper class used in the Dashboard) */
+.bookings-scroll {
+  overflow-y: auto;
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: rgba(212,175,55,0.85) transparent; /* Firefox thumb/track */
+}
+.bookings-scroll::-webkit-scrollbar {
+  width: 10px;
+}
+.bookings-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.bookings-scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(212,175,55,0.85);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
