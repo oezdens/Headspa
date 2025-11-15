@@ -69,8 +69,21 @@ CREATE TABLE heartbeat (
 ## Die `heartbeat.html` Datei
 
 Ich habe eine `heartbeat.html` Datei erstellt, die:
-- Von den Cron-Services aufgerufen werden kann
-- Automatisch einen Heartbeat sendet
+- Direkt die Supabase REST API nutzt (kein ES-Module Import)
+- Von Cron-Services per GET aufgerufen werden kann
+- Automatisch einen Heartbeat sendet, sobald die Seite geladen wird
 - Status anzeigt (für Debugging)
+
+**Wichtig:** Die Datei enthält Platzhalter für `VITE_SUPABASE_URL` und `VITE_SUPABASE_ANON_KEY`. 
+Beim Build (`npm run build`) werden diese automatisch durch das Script `scripts/prepare-heartbeat.js` 
+mit den echten Werten aus deiner `.env`-Datei ersetzt und in `build/heartbeat.html` geschrieben.
+
+**Wie es funktioniert:**
+1. Du buildest deine Seite: `npm run build`
+2. Das Build-Script ersetzt die Platzhalter in `heartbeat.html` automatisch
+3. Die fertige `build/heartbeat.html` wird mit deiner Seite deployed
+4. cron-job.org ruft `https://deine-domain/heartbeat.html` auf (einfacher GET-Request)
+5. Die Seite lädt, das JavaScript führt einen POST an Supabase REST API aus
+6. Heartbeat wird in der Datenbank gespeichert ✅
 
 Diese Datei wird mit deiner Website deployed und kann dann vom Cron-Service alle 2 Tage aufgerufen werden.
