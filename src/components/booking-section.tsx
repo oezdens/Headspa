@@ -214,7 +214,6 @@ export function BookingSection() {
             const selectedNoon = new Date(cand.getFullYear(), cand.getMonth(), cand.getDate(), 12, 0, 0, 0);
             setDate(selectedNoon);
             setSelectedTime(t);
-            toast.success(`Nächster freier Termin: ${cand.toLocaleDateString("de-DE")} um ${t}`);
             return;
           }
         }
@@ -448,15 +447,37 @@ export function BookingSection() {
                               variant={selectedTime === time ? "default" : "ghost"}
                               className={
                                 isBooked
-                                  ? "bg-zinc-900/50 border border-red-900/30 text-gray-600 cursor-not-allowed py-6 line-through"
+                                  ? "relative overflow-visible bg-transparent border border-white/6 text-white/80 cursor-not-allowed py-6 opacity-50"
                                   : selectedTime === time
                                   ? "bg-gradient-to-r from-[#FFD700] to-[#D4AF37] hover:from-[#D4AF37] hover:to-[#FFD700] text-black border-0 shadow-[0_0_20px_rgba(255,215,0,0.3)] py-6"
                                   : "bg-zinc-950/50 border border-white/6 text-gray-300 hover:border-[#FFD700] hover:text-[#FFD700] hover:bg-[#FFD700]/5 py-6"
                               }
                               onClick={() => !isBooked && setSelectedTime(time)}
                               disabled={isBooked}
+                              aria-label={isBooked ? `${time} belegt` : `${time} verfügbar`}
                             >
-                              {time} {isBooked && "(belegt)"}
+                              <div className="flex flex-col items-center">
+                                {isBooked ? (
+                                  <span
+                                    className="relative z-10 text-white/90"
+                                    style={{
+                                      textDecoration: 'line-through',
+                                      textDecorationColor: 'rgba(255,215,0,0.75)',
+                                      textDecorationThickness: '2px',
+                                      textDecorationSkipInk: 'none'
+                                    }}
+                                  >
+                                    {time}
+                                  </span>
+                                ) : (
+                                  <span className="relative z-10">{time}</span>
+                                )}
+
+                                {/* mobile-only label below time */}
+                                {isBooked && (
+                                  <span className="mt-1 text-[11px] text-gray-400 block sm:hidden" aria-hidden="true">belegt</span>
+                                )}
+                              </div>
                             </Button>
                           );
                         })}

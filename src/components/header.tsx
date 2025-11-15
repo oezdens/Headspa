@@ -120,7 +120,7 @@ export function Header() {
       <header
         ref={headerRef}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled
+          isScrolled || isMobileMenuOpen
             ? "bg-black/95 backdrop-blur-md border-b border-white/10 py-4"
             : "bg-transparent py-6"
         }`}
@@ -200,7 +200,7 @@ export function Header() {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div id="mobile-menu" className="md:hidden mt-6 pb-6 border-t border-white/10 pt-6">
+          <div id="mobile-menu" className="md:hidden mt-6 pb-6 border-t border-white/10 pt-6 bg-black/90 backdrop-blur-md -mx-4 px-4">
             <nav className="flex flex-col gap-4" aria-label="Mobile Navigation">
                 <button
                   onClick={() => scrollToSection("hero")}

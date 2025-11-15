@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Card } from "../components/ui/card";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
@@ -13,6 +14,7 @@ interface LoginProps {
 }
 
 export function Login({ onLoginSuccess }: LoginProps) {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -29,7 +31,12 @@ export function Login({ onLoginSuccess }: LoginProps) {
     });
 
     if (error) {
-      const msg = error.message || "E-Mail oder Passwort ungültig";
+      // Normalize common English error messages to German for users
+      let msg = error.message || "E-Mail oder Passwort ungültig";
+      const low = msg.toLowerCase();
+      if (low.includes("invalid login") || low.includes("invalid credentials") || low.includes("invalid password") || low.includes("invalid email")) {
+        msg = "Email oder Passwort falsch";
+      }
       toast.error("Login fehlgeschlagen: " + msg);
       setLoginError(msg);
       setIsLoading(false);
@@ -40,6 +47,12 @@ export function Login({ onLoginSuccess }: LoginProps) {
     setIsLoading(false);
     setLoginError(null);
     onLoginSuccess();
+    // navigate to dashboard after successful login
+    try {
+      navigate('/dashboard', { replace: true });
+    } catch (e) {
+      // ignore navigation errors
+    }
   };
 
   return (
@@ -116,7 +129,7 @@ export function Login({ onLoginSuccess }: LoginProps) {
             )}
           </Button>
           {loginError && (
-            <p className="text-red-400 text-sm mt-3" role="alert">{loginError}</p>
+            <p className="text-white text-sm mt-3" role="alert">{loginError}</p>
           )}
         </form>
 

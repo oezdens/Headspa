@@ -241,39 +241,7 @@ export function Dashboard({ onLogout }: DashboardProps) {
     );
   });
 
-  // Find next available date (has at least one free timeslot)
-  const findNextAvailableDate = (fromDate: Date = new Date()) => {
-    const maxDays = 365;
-    for (let i = 0; i < maxDays; i++) {
-      const d = new Date(fromDate);
-      d.setDate(fromDate.getDate() + i);
-      const dateStr = formatDateLocal(d);
-
-      const bookedTimes = bookings
-        .filter(b => (b.date || '').split('T')[0] === dateStr)
-        .map(b => b.time);
-
-      const blockedTimesForDay = blockedSlots
-        .filter(s => {
-          try {
-            return formatDateLocal(new Date(s.date)) === dateStr;
-          } catch (e) {
-            return false;
-          }
-        })
-        .map(s => s.time);
-
-      const allTimes = [...bookedTimes, ...blockedTimesForDay].filter(Boolean) as string[];
-      const unavailable = new Set<string>(allTimes);
-      if (unavailable.size < timeSlots.length) {
-        setSelectedDate(d);
-        toast.success(`Nächster freier Termin: ${d.toLocaleDateString('de-DE')}`);
-        return d;
-      }
-    }
-    toast.error('Kein verfügbarer Termin innerhalb der nächsten 12 Monate gefunden');
-    return null;
-  };
+  
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-black via-zinc-950 to-black">
@@ -301,19 +269,13 @@ export function Dashboard({ onLogout }: DashboardProps) {
           <div className="grid lg:grid-cols-2 gap-8">
             {/* Left Column - Calendar */}
             <Card className="bg-gradient-to-br from-zinc-900/90 via-black to-zinc-950 border border-white/10 p-8 backdrop-blur-xl">
-              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-[#FFD700]/10 rounded-lg">
                     <Calendar className="w-5 h-5 text-[#FFD700]" />
                   </div>
                   <h3 className="text-white text-xl">Datum auswählen</h3>
                 </div>
-                <Button
-                  onClick={() => findNextAvailableDate(new Date())}
-                  className="bg-transparent hover:bg-[#FFD700]/10 text-[#FFD700] border border-[#FFD700]/20 text-sm px-3 py-2"
-                >
-                  Nächster freier Termin
-                </Button>
               </div>
               <div className="flex justify-center">
                 <CustomCalendar

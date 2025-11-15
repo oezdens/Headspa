@@ -1,15 +1,32 @@
 import { Link } from "react-router-dom";
 import { Sparkles, MapPin, Phone, Mail, Instagram, Facebook } from "lucide-react";
+import React from "react";
 
 export function Footer() {
+  const [isMobile, setIsMobile] = React.useState(false);
+
+  React.useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   return (
     <footer className="bg-black border-t border-white/5 py-16 px-4 relative overflow-hidden">
       {/* Decorative Background */}
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#FFD700] to-transparent"></div>
       
       <div className="max-w-7xl mx-auto relative">
-        <div className="grid md:grid-cols-4 gap-12 mb-12">
-          <div className="col-span-2">
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: isMobile ? '1fr' : 'repeat(4, 1fr)',
+          gap: '3rem',
+          marginBottom: '3rem'
+        }}>
+          <div style={{ gridColumn: isMobile ? '1' : 'span 2' }}>
             <div className="flex items-center gap-3 mb-6">
               <div className="relative">
                 <div className="absolute inset-0 bg-[#FFD700] blur-xl opacity-30"></div>
@@ -39,7 +56,7 @@ Das Wasser fließt, so klar und rein, Es flert leise, lädt uns ein In seinen We
             </div>
           </div>
 
-          <div>
+          <div style={{ order: isMobile ? 1 : 0 }}>
             <h3 className="text-white mb-6 flex items-center gap-2">
               <div className="h-px w-8 bg-[#FFD700]"></div>
               Kontakt
@@ -68,7 +85,7 @@ Das Wasser fließt, so klar und rein, Es flert leise, lädt uns ein In seinen We
             </div>
           </div>
 
-          <div>
+          <div style={{ order: isMobile ? 2 : 0 }}>
             <h3 className="text-white mb-6 flex items-center gap-2">
               <div className="h-px w-8 bg-[#FFD700]"></div>
               Öffnungszeiten

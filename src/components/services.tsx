@@ -3,6 +3,7 @@ import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 import { Sparkles, Droplets, Wind, Flower2 } from "lucide-react";
 import useInView from "./ui/useInView";
+import React from "react";
 import kleineImg from "../Bilder/k.jpg";
 import mittlereImg from "../Bilder/m.avif";
 import grosseImg from "../Bilder/g.jpg";
@@ -38,6 +39,17 @@ const services = [
 ];
 
 export function Services() {
+  const [isMobile, setIsMobile] = React.useState(false);
+
+  React.useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   return (
     <section id="services" className="py-32 px-4 bg-gradient-to-b from-black via-zinc-950 to-black relative overflow-hidden">
       {/* Decorative Background Elements */}
@@ -75,7 +87,11 @@ export function Services() {
             })()}
         </div>
         
-        <div className="grid grid-cols-3 gap-6">
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
+          gap: '1.5rem'
+        }}>
           {services.map((service, index) => {
             const { ref, inView } = useInView<HTMLDivElement>();
             return (
