@@ -50,10 +50,10 @@ export function BookingSection() {
         // Use YYYY-MM-DD format for comparison
         const dateStr = formatLocal(date);
 
-        // Fetch both bookings and blocked slots
+        // Fetch bookings from public view (no customer data) and blocked slots
         const [bookingsResult, blockedResult] = await Promise.all([
           supabase
-            .from("bookings")
+            .from("public_bookings")
             .select("time, date"),
           supabase
             .from("blocked_slots")
@@ -96,10 +96,10 @@ export function BookingSection() {
     let mounted = true;
     const fetchFullyBlocked = async () => {
       try {
-        // Fetch both blocked_slots and bookings so we can count total occupied slots per day
+        // Fetch both blocked_slots and public_bookings (no customer data)
         const [blockedRes, bookingsRes] = await Promise.all([
           supabase.from('blocked_slots').select('date, time'),
-          supabase.from('bookings').select('date, time')
+          supabase.from('public_bookings').select('date, time')
         ]);
 
         if (blockedRes.error) {
@@ -295,6 +295,31 @@ export function BookingSection() {
         toast.error("Fehler beim Speichern der Buchung. Bitte versuchen Sie es erneut.");
         setIsBooking(false);
         return;
+      }
+
+      // Send confirmation email via Supabase Edge Function
+      if (data && data[0]?.id) {
+        try {
+          const emailResponse = await fetch(
+            `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-booking-email`,
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
+              },
+              body: JSON.stringify({ booking_id: data[0].id })
+            }
+          );
+          
+          if (!emailResponse.ok) {
+            console.error('Email sending failed:', await emailResponse.text());
+            // Don't show error to user - booking is still successful
+          }
+        } catch (emailError) {
+          console.error('Email endpoint error:', emailError);
+          // Don't show error to user - booking is still successful
+        }
       }
 
       // Success — set state and notify other parts of the app
