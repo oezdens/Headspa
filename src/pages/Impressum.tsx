@@ -42,7 +42,7 @@ export function Impressum() {
                 <h2 className="text-xl text-white font-semibold">Diensteanbieter / Betreiber</h2>
               </div>
               <div className="pl-8 space-y-4">
-                <p className="text-gray-300 text-base font-medium">Capillus HEADSPA — "NAME"</p>
+                <p className="text-gray-300 text-base font-medium">Capillus HEADSPA — Sabrina Panje</p>
                 
                 <div className="space-y-3">
                   <div className="flex items-start gap-3">
@@ -60,8 +60,8 @@ export function Impressum() {
                     <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-white/5 flex-shrink-0">
                       <Phone className="w-4 h-4 text-[#FFD700]" />
                     </div>
-                    <a href="tel:+4915758199741" className="text-gray-300 hover:text-[#FFD700] transition-colors text-sm">
-                      +49 30 12345678
+                    <a href="tel:+491704781661" className="text-gray-300 hover:text-[#FFD700] transition-colors text-sm">
+                      +49 170 4781661
                     </a>
                   </div>
 
@@ -85,7 +85,7 @@ export function Impressum() {
             <div className="border-t border-white/5 pt-8">
               <h3 className="text-lg text-white font-semibold mb-3">Verantwortlich für den Inhalt</h3>
               <p className="text-gray-300 text-sm leading-relaxed">
-                Gemäß § 18 Abs. 2 Medienstaatsvertrag (MStV): Capillus HEADSPA, Kieler Str. 65, 25551 Hohenlockstedt
+                Gemäß § 18 Abs. 2 Medienstaatsvertrag (MStV): Sabrina Panje, Capillus HEADSPA, Kieler Str. 65, 25551 Hohenlockstedt
               </p>
             </div>
 

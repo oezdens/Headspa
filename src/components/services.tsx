@@ -13,7 +13,7 @@ const services = [
     icon: Sparkles,
     title: "Kleine Auszeit",
     value: "kleine",
-    duration: "30 Min",
+    duration: "45 Min",
     price: "€60",
     description: "Kurze Auszeit zur Entspannung und Revitalisierung von Kopfhaut und Sinnen.",
     image: kleineImg
@@ -22,7 +22,7 @@ const services = [
     icon: Droplets,
     title: "Mittlere Auszeit",
     value: "mittlere",
-    duration: "45 Min",
+    duration: "65 Min",
     price: "€85",
     description: "Ausgedehnte Behandlung mit Massage und pflegenden Seren für mehr Wohlbefinden.",
     image: mittlereImg
@@ -31,7 +31,7 @@ const services = [
     icon: Wind,
     title: "Die große Auszeit",
     value: "grosse",
-    duration: "75 Min",
+    duration: "80 Min",
     price: "€110",
     description: "Umfassende Verwöhnbehandlung für tiefe Entspannung und Regeneration.",
     image: grosseImg

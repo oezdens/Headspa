@@ -9,7 +9,8 @@ interface CustomCalendarProps {
 }
 
 export function CustomCalendar({ selected, onSelect, disabled }: CustomCalendarProps) {
-  const [currentMonth, setCurrentMonth] = useState(selected || new Date());
+  // Start with January 2026 by default
+  const [currentMonth, setCurrentMonth] = useState(selected || new Date(2026, 0, 1));
 
   useEffect(() => {
     if (selected) setCurrentMonth(selected);

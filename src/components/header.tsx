@@ -162,9 +162,9 @@ export function Header() {
             </button>
             <div className="h-8 w-px bg-white/20"></div>
             <a 
-              href="tel:+493012345678" 
+              href="tel:+491704781661" 
               className="text-white/60 hover:text-[#FFD700] transition-colors focus:outline-none focus:ring-2 focus:ring-[#FFD700] rounded p-1"
-              aria-label="Anrufen: +49 30 12345678"
+              aria-label="Anrufen: +49 170 4781661"
             >
               <Phone className="w-5 h-5" />
             </a>

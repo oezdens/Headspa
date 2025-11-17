@@ -46,7 +46,7 @@ export function Datenschutz() {
                   Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können.
                 </p>
                 <p className="text-gray-300 text-sm leading-relaxed">
-                  <strong>Verantwortliche Stelle:</strong> Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist <strong>Name</strong>. Die vollständigen Kontaktdaten finden Sie im Impressum.
+                  <strong>Verantwortliche Stelle:</strong> Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist <strong>Sabrina Panje</strong>. Die vollständigen Kontaktdaten finden Sie im Impressum.
                 </p>
               </div>
             </div>
@@ -58,7 +58,7 @@ export function Datenschutz() {
                 <div>
                   <h4 className="text-white font-medium mb-2">Wer ist verantwortlich für die Datenerfassung?</h4>
                   <p className="text-gray-300 text-sm leading-relaxed">
-                    Die Datenverarbeitung auf dieser Website erfolgt durch den Websitebetreiber <strong>NAME</strong>. Dessen Kontaktdaten können Sie dem Impressum dieser Website entnehmen.
+                    Die Datenverarbeitung auf dieser Website erfolgt durch den Websitebetreiber <strong>Sabrina Panje</strong>. Dessen Kontaktdaten können Sie dem Impressum dieser Website entnehmen.
                   </p>
                 </div>
                 
@@ -133,13 +133,26 @@ export function Datenschutz() {
 
             {/* Kontaktformular */}
             <div className="border-t border-white/5 pt-8">
-              <h3 className="text-lg text-white font-semibold mb-3">Kontaktformular</h3>
+              <h3 className="text-lg text-white font-semibold mb-3">Buchungssystem und Datenverarbeitung</h3>
               <div className="pl-8 space-y-4">
                 <p className="text-gray-300 text-sm leading-relaxed">
-                  Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben aus dem Anfrageformular inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert.
+                  Für die Verwaltung von Buchungen nutzen wir den Dienst <strong>Supabase</strong> (Supabase Inc., USA). Wenn Sie über unsere Website einen Termin buchen, werden folgende Daten erfasst und auf Servern von Supabase (Standort: EU-Region Frankfurt) gespeichert:
+                </p>
+                <ul className="list-disc list-inside text-gray-300 text-sm space-y-1">
+                  <li>Name</li>
+                  <li>E-Mail-Adresse</li>
+                  <li>Telefonnummer</li>
+                  <li>Gebuchter Service</li>
+                  <li>Datum und Uhrzeit der Buchung</li>
+                </ul>
+                <p className="text-gray-300 text-sm leading-relaxed">
+                  Die Verarbeitung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO zur Durchführung vorvertraglicher Maßnahmen und zur Vertragserfüllung. Die Daten werden ausschließlich zur Bearbeitung Ihrer Buchung verwendet und nicht an Dritte weitergegeben.
                 </p>
                 <p className="text-gray-300 text-sm leading-relaxed">
-                  Diese Daten geben wir nicht ohne Ihre Einwilligung weiter. Die Verarbeitung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO, sofern Ihre Anfrage mit der Erfüllung eines Vertrags zusammenhängt oder zur Durchführung vorvertraglicher Maßnahmen erforderlich ist.
+                  Supabase verarbeitet Ihre Daten in unserem Auftrag gemäß den Bestimmungen eines Auftragsverarbeitungsvertrags (AVV) und nach den Anforderungen der DSGVO. Weitere Informationen finden Sie in der Datenschutzerklärung von Supabase: <a href="https://supabase.com/privacy" target="_blank" rel="noopener noreferrer" className="text-[#FFD700] hover:text-[#D4AF37] transition-colors underline">https://supabase.com/privacy</a>
+                </p>
+                <p className="text-gray-300 text-sm leading-relaxed">
+                  Ihre Buchungsdaten werden gelöscht, sobald sie für die Zwecke, für die sie erhoben wurden, nicht mehr erforderlich sind, spätestens jedoch nach Ablauf gesetzlicher Aufbewahrungsfristen.
                 </p>
               </div>
             </div>

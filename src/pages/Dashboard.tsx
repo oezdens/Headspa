@@ -51,7 +51,7 @@ export function Dashboard({ onLogout }: DashboardProps) {
   const timeSlots = [
     "10:00", "11:00", "12:00",
     "13:00", "14:00", "15:00",
-    "16:00", "17:00"
+    "16:00", "17:00", "18:00", "19:00"
   ];
 
   // Fetch bookings from Supabase
@@ -275,6 +275,17 @@ export function Dashboard({ onLogout }: DashboardProps) {
                     <Calendar className="w-5 h-5 text-[#FFD700]" />
                   </div>
                   <h3 className="text-white text-xl">Datum auswählen</h3>
+                </div>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-gray-400 text-xs">Anstehende Termine:</span>
+                  <span className="text-[#FFD700] text-lg font-bold">
+                    {bookings.filter(b => {
+                      const bookingDate = new Date(b.date);
+                      const today = new Date();
+                      today.setHours(0, 0, 0, 0);
+                      return bookingDate >= today;
+                    }).length}
+                  </span>
                 </div>
               </div>
               <div className="flex justify-center">

@@ -36,7 +36,7 @@ export function Footer() {
             </div>
             <p className="text-gray-400 leading-relaxed mb-6 max-w-md">
             
-Das Wasser fließt, so klar und rein, Es flert leise, lädt uns ein In seinen Wellen, sanft und kühl, Finden wir Ruhe, ein stilles Gefühl. Der schwindet, der Stress verge, Im Einklang mit Wasser, die Seele steht. Entspannung kommt, die Kraft wird spürbar, Im sanften Fluss, sind wir einfach da.
+Willkommen bei Capillus HEADSPA in Hohenlockstedt – Ihrem Zufluchtsort für professionelle Head Spa Behandlungen, Kopfhautpflege und ganzheitliche Wellness. Erleben Sie luxuriöse Kopfmassagen, Scalp Treatments und intensive Tiefenreinigung für gesundes Haar und pure Entspannung.
             </p>
             <div className="flex gap-4">
               <a 
@@ -46,13 +46,7 @@ Das Wasser fließt, so klar und rein, Es flert leise, lädt uns ein In seinen We
               >
                 <Instagram className="w-5 h-5 text-gray-400 group-hover:text-[#FFD700] transition-colors" />
               </a>
-              <a 
-                href="#" 
-                className="group p-3 bg-zinc-900 hover:bg-[#FFD700]/10 border border-white/5 hover:border-[#FFD700] rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#FFD700]"
-                aria-label="Besuchen Sie uns auf Facebook"
-              >
-                <Facebook className="w-5 h-5 text-gray-400 group-hover:text-[#FFD700] transition-colors" />
-              </a>
+              
             </div>
           </div>
 
@@ -67,12 +61,12 @@ Das Wasser fließt, so klar und rein, Es flert leise, lädt uns ein In seinen We
                 <address className="group-hover:text-white transition-colors not-italic">Kieler Str. 65<br />25551 Hohenlockstedt</address>
               </div>
               <a 
-                href="tel:+493012345678" 
+                href="tel:+491704781661" 
                 className="flex items-center gap-3 group hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-[#FFD700] rounded px-2 py-1 -ml-2"
-                aria-label="Anrufen: +49 30 12345678"
+                aria-label="Anrufen: +49 170 4781661"
               >
                 <Phone className="w-5 h-5 text-[#FFD700] flex-shrink-0" aria-hidden="true" />
-                <span>+49 30 12345678</span>
+                <span>+49 170 4781661</span>
               </a>
               <a 
                 href="mailto:capillusheadspa@gmail.com" 

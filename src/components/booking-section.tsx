@@ -11,15 +11,15 @@ import CustomSelect from "./custom-select";
 import { supabase } from "../lib/supabaseClient";
 
 const services = [
-  { value: "kleine", label: "Kleine Auszeit - €60" },
-  { value: "mittlere", label: "Mittlere Auszeit - €85" },
-  { value: "grosse", label: "Die große Auszeit - €110" }
+  { value: "kleine", label: "Kleine Auszeit (45 Min.) - €60" },
+  { value: "mittlere", label: "Mittlere Auszeit (65 Min.) - €85" },
+  { value: "grosse", label: "Die große Auszeit (80 Min.) - €110" }
 ];
 
 const timeSlots = [
   "10:00", "11:00", "12:00",
   "13:00", "14:00", "15:00",
-  "16:00", "17:00"
+  "16:00", "17:00", "18:00", "19:00"
 ];
 
 export function BookingSection() {
@@ -161,25 +161,26 @@ export function BookingSection() {
   // Find next available appointment (up to 365 days)
   const findNextAvailable = async () => {
     try {
-      const today = new Date();
-      // normalize today to local midnight
-      today.setHours(0, 0, 0, 0);
-      const todayStr = formatLocal(today);
+      // Start from January 8, 2026
+      const startDate = new Date(2026, 0, 8); // January 8, 2026
+      startDate.setHours(0, 0, 0, 0);
 
-      // start from tomorrow (next day)
-      const start = new Date(today);
-      start.setDate(start.getDate() + 1);
-      start.setHours(0, 0, 0, 0);
-
-      const end = new Date(start);
-      end.setDate(start.getDate() + 365);
+      const end = new Date(startDate);
+      end.setDate(startDate.getDate() + 365);
       end.setHours(23, 59, 59, 999);
 
       // Iterate day-by-day and fetch bookings+blocked for that specific day
       for (let i = 0; i <= 365; i++) {
-        const cand = new Date(start);
-        cand.setDate(start.getDate() + i);
+        const cand = new Date(startDate);
+        cand.setDate(startDate.getDate() + i);
         cand.setHours(0, 0, 0, 0);
+        
+        // Only allow Tuesday (2) and Friday (5)
+        const dayOfWeek = cand.getDay();
+        if (dayOfWeek !== 2 && dayOfWeek !== 5) {
+          continue;
+        }
+        
         const dayStart = new Date(cand);
         const dayEnd = new Date(cand);
         dayEnd.setHours(23, 59, 59, 999);
@@ -208,15 +209,6 @@ export function BookingSection() {
         const unavailable = new Set([...bookedTimes, ...blockedTimes]);
 
         for (const t of timeSlots) {
-          // If candidate is today (shouldn't happen since we start from tomorrow), skip past times
-          if (formatLocal(cand) === todayStr) {
-            const [hour, min] = t.split(":").map(Number);
-            const now = new Date();
-            if (now.getHours() > hour || (now.getHours() === hour && now.getMinutes() >= min)) {
-              continue;
-            }
-          }
-
           if (!unavailable.has(t)) {
             const selectedNoon = new Date(cand.getFullYear(), cand.getMonth(), cand.getDate(), 12, 0, 0, 0);
             setDate(selectedNoon);
@@ -302,31 +294,6 @@ export function BookingSection() {
         toast.error("Fehler beim Speichern der Buchung. Bitte versuchen Sie es erneut.");
         setIsBooking(false);
         return;
-      }
-
-      // Send confirmation email via Supabase Edge Function
-      if (data && data[0]?.id) {
-        try {
-          const emailResponse = await fetch(
-            `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-booking-email`,
-            {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
-              },
-              body: JSON.stringify({ booking_id: data[0].id })
-            }
-          );
-          
-          if (!emailResponse.ok) {
-            console.error('Email sending failed:', await emailResponse.text());
-            // Don't show error to user - booking is still successful
-          }
-        } catch (emailError) {
-          console.error('Email endpoint error:', emailError);
-          // Don't show error to user - booking is still successful
-        }
       }
 
       // Success — set state and notify other parts of the app
@@ -448,9 +415,27 @@ export function BookingSection() {
                         disabled={(d) => {
                           const today = new Date();
                           today.setHours(0,0,0,0);
-                          // d is created at noon in the calendar; compare dates by day
-                          if (d < today) return true;
-                          if (d.getDay() === 0) return true; // Sunday
+                          // Block all dates before 08.01.2026
+                          const startDate = new Date(2026, 0, 8); // January 8, 2026
+                          startDate.setHours(0,0,0,0);
+                          // Block past dates and dates before start date
+                          const minDate = today > startDate ? today : startDate;
+                          if (d < minDate) return true;
+                          
+                          // Allow all of January 2026, otherwise limit to 4 weeks from today
+                          const endOfJanuary2026 = new Date(2026, 1, 1); // February 1, 2026 (exclusive)
+                          endOfJanuary2026.setHours(0,0,0,0);
+                          const fourWeeksFromToday = new Date(today);
+                          fourWeeksFromToday.setDate(today.getDate() + 28); // 4 weeks = 28 days
+                          fourWeeksFromToday.setHours(23,59,59,999);
+                          
+                          // If today is before Feb 2026, allow all of January
+                          const maxDate = today < endOfJanuary2026 ? endOfJanuary2026 : fourWeeksFromToday;
+                          if (d >= maxDate) return true;
+                          
+                          // Only allow Tuesday (2) and Friday (5)
+                          const dayOfWeek = d.getDay();
+                          if (dayOfWeek !== 2 && dayOfWeek !== 5) return true;
                           const dayStr = formatLocal(d);
                           return fullyBlockedDates.has(dayStr);
                         }}
@@ -590,7 +575,7 @@ export function BookingSection() {
                         </Label>
                         <Input
                           type="tel"
-                          placeholder="+49 123 456789"
+                          placeholder="+49 170 4781661"
                           value={formData.phone}
                           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                           className="bg-zinc-950/50 border-white/10 text-white placeholder:text-gray-600 py-6 focus:border-[#FFD700] transition-colors"
@@ -606,6 +591,10 @@ export function BookingSection() {
                   >
                     {isBooking ? "Wird gespeichert..." : "Jetzt buchen"}
                   </Button>
+                  
+                  <p className="text-center text-gray-400 text-sm mt-3">
+                    Nur Barzahlung möglich
+                  </p>
 
                   {isBooked && (
                     <div className="bg-gradient-to-r from-[#FFD700]/10 to-[#D4AF37]/10 border border-[#FFD700]/50 rounded-xl p-6 animate-[fadeIn_0.5s_ease-in] shadow-[0_0_30px_rgba(255,215,0,0.2)]">
