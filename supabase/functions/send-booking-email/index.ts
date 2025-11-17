@@ -163,7 +163,7 @@ Bei Fragen kontaktieren Sie uns unter info@oezdens.com
         'Authorization': `Bearer ${RESEND_API_KEY}`
       },
       body: JSON.stringify({
-        from: 'Özdens Head Spa <noreply@oezdens.com>',
+        from: 'Özdens Head Spa <onboarding@resend.dev>',
         to: [booking.email],
         bcc: ['info@oezdens.com'], // Owner notification
         subject: 'Buchungsbestätigung - Özdens Head Spa',

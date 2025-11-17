@@ -37,12 +37,19 @@ export function BookingSection() {
   const [isBooking, setIsBooking] = useState(false);
   const [bookedTimeSlotsForDate, setBookedTimeSlotsForDate] = useState<string[]>([]);
   const [fullyBlockedDates, setFullyBlockedDates] = useState<Set<string>>(new Set());
+  const [bookedDate, setBookedDate] = useState<Date | undefined>(undefined);
+  const [bookedTime, setBookedTime] = useState<string>("");
 
   // Fetch booked time slots when date changes
   useEffect(() => {
     if (!date) {
       setBookedTimeSlotsForDate([]);
       return;
+    }
+
+    // Reset booking success message when user changes date after booking
+    if (isBooked) {
+      setIsBooked(false);
     }
 
     const fetchBookedSlots = async () => {
@@ -325,11 +332,15 @@ export function BookingSection() {
       // Success — set state and notify other parts of the app
       setIsBooked(true);
       setIsBooking(false);
+      
+      // Save the booked date and time for display
+      setBookedDate(date);
+      setBookedTime(selectedTime);
 
       // Make sure the just-booked time is reflected in the available slots immediately
       try {
-        const bookedTime = selectedTime;
-        setBookedTimeSlotsForDate((prev) => Array.from(new Set([...(prev || []), bookedTime])));
+        const bookedTimeSlot = selectedTime;
+        setBookedTimeSlotsForDate((prev) => Array.from(new Set([...(prev || []), bookedTimeSlot])));
       } catch (e) {
         // ignore
       }
@@ -605,6 +616,13 @@ export function BookingSection() {
                       <p className="text-gray-300 leading-relaxed">
                         Vielen Dank! Ihre Buchung wurde gespeichert. Wir freuen uns darauf, Sie zu verwöhnen!
                       </p>
+                      {bookedDate && bookedTime && (
+                        <div className="mt-4 pt-3 border-t border-white/10">
+                          <p className="text-gray-400 text-sm">
+                            Reservierung am <span className="text-white font-medium">{bookedDate.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric" })}</span> um <span className="text-[#FFD700] font-medium">{bookedTime} Uhr</span>
+                          </p>
+                        </div>
+                      )}
                     </div>
                   )}
 
