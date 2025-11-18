@@ -40,13 +40,14 @@ Willkommen bei Capillus HEADSPA in Hohenlockstedt – Ihrem Zufluchtsort für pr
             </p>
             <div className="flex gap-4">
               <a 
-                href="#" 
+                href="https://www.instagram.com/capillusheadspa?igsh=ZzJvNmhnbGZlbTM0" 
                 className="group p-3 bg-zinc-900 hover:bg-[#FFD700]/10 border border-white/5 hover:border-[#FFD700] rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#FFD700]"
                 aria-label="Besuchen Sie uns auf Instagram"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <Instagram className="w-5 h-5 text-gray-400 group-hover:text-[#FFD700] transition-colors" />
               </a>
-              
             </div>
           </div>
 
