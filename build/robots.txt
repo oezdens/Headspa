@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemaps
-Sitemap: https://www.capillus-headspa.de/sitemap.xml
+Sitemap: https://www.capillusheadspa.de/sitemap.xml
 
 # Disallow admin/internal pages
 Disallow: /dashboard
